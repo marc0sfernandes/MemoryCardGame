@@ -53,8 +53,8 @@ function checkarSrc(ele) {
     ultimoClique= ele
     return;
   }else if (srcAnterior == ele.getElementsByTagName('img')[0].currentSrc && ele !== ultimoClique) {	
-    ele.getElementsByTagName('img')[0].src = '';
-    elementoAnrterior.getElementsByTagName('img')[0].src = '';
+    ele.getElementsByTagName('img')[0].src ="";
+    elementoAnrterior.getElementsByTagName('img')[0].src ="";
     ele.classList.add("Certo");
     elementoAnrterior.classList.add("Certo");
     srcAnterior = '';
@@ -98,4 +98,21 @@ function updateTimer() {
   const remainderSeconds = seconds % 60;
   const display = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
   timerDisplay.innerHTML = display;
-}
+
+  const imgs = document.querySelectorAll("img");
+
+  let isAllImagesLoaded;
+
+  for (let i = 0; i < imgs.length; i++) {
+    if (imgs[i].src !== "" && !imgs[i].complete) {
+      isAllImagesLoaded = false;
+      break;
+  }
+
+  if (isAllImagesLoaded) {
+    clearInterval(updateTimer);
+    if (window.confirm(`Congratulations! Your time was ${display}. Click 'OK' to start again.`)) {
+      location.reload();
+    }
+  }
+}}
